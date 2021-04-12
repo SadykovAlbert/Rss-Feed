@@ -23,5 +23,4 @@ struct Result: Codable {
     let artistName, releaseDate, name, collectionName: String
     let copyright: String
     let artworkUrl100: String
-    let url: String
 }

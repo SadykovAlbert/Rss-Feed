@@ -22,6 +22,8 @@ class FeedDetailsViewController: UIViewController {
     @IBOutlet weak var copyrightLabel: UILabel!
         
     
+    var viewModel: FeedDetailsViewModelProtocol!
+    
     var feed: Result!
     
     override func viewDidLoad() {
@@ -31,15 +33,15 @@ class FeedDetailsViewController: UIViewController {
     }
     
     func setupUI(){
+        collectionNameLabel.text = viewModel.collectionName
+        songNameLabel.text = viewModel.name
+        artistNameLabel.text  = viewModel.artistName
+        releaseDateLabel.text = viewModel.releaseDate
+        copyrightLabel.text = viewModel.copyright
         
-        collectionNameLabel.text = feed.collectionName
-        songNameLabel.text = feed.name
-        artistNameLabel.text  = feed.artistName
-        releaseDateLabel.text = feed.releaseDate
-        copyrightLabel.text = feed.copyright
-        
-        ImageManager.shared.getImageData(stringUrl: feed.artworkUrl100) {[weak self] (imageData, _) in
-            self?.imageView?.image = UIImage(data: imageData)
+        viewModel.setImage {[weak self] (imageData) in
+            guard let imageData = imageData else {return}
+            self?.imageView.image = UIImage(data: imageData)
         }
     }
 
